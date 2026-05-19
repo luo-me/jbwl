@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羁绊网络 Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>羁绊网络 Dashboard</h1>
+            <div class="stats-bar" id="statsBar">
+                <div class="stat-item">
+                    <span class="stat-label">Agent</span>
+                    <span class="stat-value" id="statAgentCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">羁绊</span>
+                    <span class="stat-value" id="statBondCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">活跃情感</span>
+                    <span class="stat-value" id="statEmotionCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">平均效价</span>
+                    <span class="stat-value" id="statAvgValence">0.00</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">平均信任</span>
+                    <span class="stat-value" id="statAvgTrust">0.00</span>
+                </div>
+            </div>
+        </header>
+        <div class="scenario-bar">
+            <span class="scenario-label">预览场景：</span>
+            <button class="scenario-btn" onclick="loadScenario('simple')">简单</button>
+            <button class="scenario-btn" onclick="loadScenario('medium')">中等</button>
+            <button class="scenario-btn" onclick="loadScenario('complex')">复杂</button>
+            <button class="scenario-btn" onclick="loadScenario('ultra')">超复杂</button>
+            <button class="scenario-btn clear-btn" onclick="clearAll()">清空</button>
+        </div>
+        <div class="main-content">
+            <div class="graph-panel">
+                <svg id="forceGraph"></svg>
+            </div>
+            <div class="side-panel">
+                <div class="card agent-card">
+                    <h2>Agent 面板</h2>
+                    <div class="agent-register">
+                        <input type="text" id="agentName" placeholder="Agent 名称">
+                        <input type="text" id="agentDesc" placeholder="描述（可选）">
+                        <button onclick="registerAgent()">+ 注册</button>
+                    </div>
+                    <div class="agent-list" id="agentList"></div>
+                </div>
+                <div class="card bond-card">
+                    <h2>羁绊详情</h2>
+                    <div id="bondDetail">
+                        <p class="placeholder-text">点击图谱节点查看羁绊详情</p>
+                    </div>
+                    <div id="eventForm" class="event-form" style="display:none;">
+                        <h3>记录事件</h3>
+                        <select id="eventTarget"></select>
+                        <select id="eventType">
+                            <option value="cooperation">合作</option>
+                            <option value="conflict">冲突</option>
+                            <option value="betrayal">背叛</option>
+                            <option value="gift">赠礼</option>
+                            <option value="promise">承诺</option>
+                            <option value="insult">侮辱</option>
+                            <option value="rescue">救援</option>
+                            <option value="teaching">教导</option>
+                            <option value="competition">竞争</option>
+                            <option value="other">其他</option>
+                        </select>
+                        <input type="text" id="eventDescription" placeholder="事件描述">
+                        <div class="form-row">
+                            <label>效价影响</label>
+                            <input type="range" id="impactValence" min="-1" max="1" step="0.1" value="0">
+                            <span id="impactValenceValue">0.0</span>
+                        </div>
+                        <div class="form-row">
+                            <label>信任影响</label>
+                            <input type="range" id="impactTrust" min="-1" max="1" step="0.1" value="0">
+                            <span id="impactTrustValue">0.0</span>
+                        </div>
+                        <button onclick="emitEvent()">提交事件</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

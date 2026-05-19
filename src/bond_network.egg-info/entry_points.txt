@@ -1,0 +1,4 @@
+[console_scripts]
+bond = bond_network.cli:main
+bond-mcp = bond_network.mcp_server:main
+bondd = bond_network.daemon_cli:main
